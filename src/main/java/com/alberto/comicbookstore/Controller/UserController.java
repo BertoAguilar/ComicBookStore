@@ -1,5 +1,6 @@
 package com.alberto.comicbookstore.Controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ public class UserController {
             return "loginReg.jsp";
         } else {
             session.setAttribute("userId", newUser.getId());
-            return "redirect:/teams";
+            return "redirect:/Home";
         }
     }
 
@@ -52,7 +53,7 @@ public class UserController {
             return "loginReg.jsp";
         } else {
             session.setAttribute("userId", user.getId());
-            return "redirect:/teams";
+            return "redirect:/Home";
         }
     }
 
@@ -61,5 +62,16 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
+    }
+    
+    // Home Page
+    @GetMapping("/Home")
+    public String homepage(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("user", users.getLoggedInUser(userId));
+        return "homepage.jsp";
     }
 }
