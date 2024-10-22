@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Soccer TeamSheets</title>
+<title>Login And Register</title>
 <!-- for Bootstrap CSS -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 <!-- YOUR own local CSS -->
@@ -19,30 +19,33 @@
 
 </head>
 <body>
-<div class="container">
-	<div class="row">
 		<div>
 			<div>
-				<form:form action="/register/user" method="post" modelAttribute="newUser" class="box">
+				<form:form action="/register/user" method="post" modelAttribute="newUser">
 					<h1>Register</h1>
-					<p class="text-muted">Please enter your email and create a password!</p>
+					<p>Please enter your email and create a password!</p>
 					<p>
-						<form:errors class="text-danger" path="firstName" />
+						<form:label path="firstName">First Name</form:label>
+						<form:errors path="firstName" class="text-danger"/>
 						<form:input type="text" path="firstName" placeholder="First Name" />
 					</p>
 					<p>
+						<form:label path="lastName">Last Name</form:label>
 						<form:errors class="text-danger" path="lastName" />
 						<form:input type="text" path="lastName" placeholder="Last Name" />
 					</p>
 					<p>
+						<form:label path="email">Email</form:label>
 						<form:errors class="text-danger" path="email" />
 						<form:input type="email" path="email" placeholder="Email" />
 					</p>
 					<p>
+						<form:label path="password">Password</form:label>
 						<form:errors class="text-danger" path="password" />
 						<form:input type="password" path="password" placeholder="Password" />
 					</p>
 					<p>
+						<form:label path="confirm">Confirm Password</form:label>
 						<form:errors class="text-danger" path="confirm" />
 						<form:input type="password" path="confirm"
 							placeholder="Confirm Password" />
@@ -51,19 +54,20 @@
 				</form:form>
 			</div>
 		</div>
-	</div>
-		<div class="row">
+		<div>
 			<div>
 				<div>
 					<form:form action="/login/user" method="post"
-						modelAttribute="newLogin" class="box">
+						modelAttribute="newLogin">
 						<h1>Login</h1>
-						<p class="text-muted">Please enter your Email and Password!</p>
+						<p>Please enter your Email and Password!</p>
 						<p>
+							<form:label path="email">Email</form:label>
 							<form:errors class="text-danger" path="email" />
 							<form:input type="email" path="email" placeholder="Email" />
 						</p>
 						<p>
+							<form:label path="password">Password</form:label>
 							<form:errors class="text-danger" path="password" />
 							<form:input type="password" path="password"
 								placeholder="Password" />
@@ -73,6 +77,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>
