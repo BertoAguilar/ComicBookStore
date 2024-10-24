@@ -49,9 +49,8 @@ public class Comic {
 	@Max(value = 500, message = "Comic Book Must Have Fewer Than 500 Pages")
 	private Integer numOfPages;
 	
-	// URL to the image of the comic's cover
-	@NotEmpty(message = "Please Provide Cover Photo")
-	private String coverImageUrl;
+
+	private String coverImage;
 	
 	@Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -82,21 +81,6 @@ public class Comic {
 	private List<Genre> genres;
 
 	public Comic() {}
-
-	public Comic(
-			@NotEmpty(message = "Please Enter Comic Book Title") @Size(min = 1, max = 128, message = "Comic Book Title must be between 1 and 128 characters") String title,
-			@NotEmpty(message = "Please Enter Author") @Size(min = 3, max = 50, message = "Author must be between 3 and 50 characters") String author,
-			@NotEmpty(message = "Please Enter a Publisher") @Size(min = 1, max = 128, message = "Publisher must be between 2 and 128 characters") String publisher,
-			@NotNull(message = "Please Enter a Number of Pages") @Min(value = 1, message = "Comic Book Must Have At Least One Page") @Max(value = 500, message = "Comic Book Must Have Fewer Than 500 Pages") Integer numOfPages,
-			@NotEmpty(message = "Please Provide Cover Photo") String coverImageUrl, User user, List<Genre> genres) {
-		this.title = title;
-		this.author = author;
-		this.publisher = publisher;
-		this.numOfPages = numOfPages;
-		this.coverImageUrl = coverImageUrl;
-		this.user = user;
-		this.genres = genres;
-	}
 
 	public Long getId() {
 		return id;
@@ -138,12 +122,12 @@ public class Comic {
 		this.numOfPages = numOfPages;
 	}
 
-	public String getCoverImageUrl() {
-		return coverImageUrl;
+	public String getCoverImage() {
+		return coverImage;
 	}
 
-	public void setCoverImageUrl(String coverImageUrl) {
-		this.coverImageUrl = coverImageUrl;
+	public void setCoverImage(String coverImage) {
+		this.coverImage = coverImage;
 	}
 
 	public Date getCreatedAt() {

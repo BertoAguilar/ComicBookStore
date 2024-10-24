@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 <!-- YOUR own local CSS -->
 <link rel="stylesheet" href="/css/homepage.css" />
-<link rel="image_src" href="/img/info.png" />
 <!-- For any Bootstrap that uses JS -->
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <!-- YOUR own local JavaScript -->
@@ -23,10 +22,41 @@
 
 </head>
 <body>
-	<h1>
-		Welcome
-		<c:out value="${user.firstName}" />
-	</h1>
-	<a href="/logout" class="btn btn-danger"> Logout</a>
+    <h1>
+        Welcome
+        <c:out value="${user.firstName}" />
+    </h1>
+    <a href="/comics/new" class="btn btn-primary">Add A New Comic</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+
+    <h2>All Comics</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Number of Pages</th>
+                <th>Cover Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="comic" items="${comics}">
+                <tr>
+                    <td>
+                        <a href="/teams/details/${comic.title}">
+                            <c:out value="${comic.title}" />
+                        </a>
+                    </td>
+                    <td><c:out value="${comic.author}" /></td>
+                    <td><c:out value="${comic.numOfPages}" /></td>
+                    <td>
+                        <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image">
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+<img src="/uploads/cover_pictures/spidermanComicCover.jpg"/>
+
 </body>
 </html>

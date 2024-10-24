@@ -63,15 +63,4 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
-    
-    // Home Page
-    @GetMapping("/Home")
-    public String homepage(HttpSession session, Model model) {
-        Long userId = (Long) session.getAttribute("userId");
-        if (userId == null) {
-            return "redirect:/";
-        }
-        model.addAttribute("user", users.getLoggedInUser(userId));
-        return "homepage.jsp";
-    }
 }
