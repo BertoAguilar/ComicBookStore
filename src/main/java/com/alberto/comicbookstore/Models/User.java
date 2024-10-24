@@ -1,14 +1,17 @@
 package com.alberto.comicbookstore.Models;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -63,6 +66,9 @@ public class User {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Comic> comics;
 
 	public User() {
 	}
@@ -137,6 +143,14 @@ public class User {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public List<Comic> getComics() {
+		return comics;
+	}
+
+	public void setComics(List<Comic> comics) {
+		this.comics = comics;
 	}
 
 }
