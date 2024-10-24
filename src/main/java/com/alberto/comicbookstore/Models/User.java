@@ -44,6 +44,8 @@ public class User {
 	@NotEmpty(message = "Confirm Password is required!")
 	@Size(min = 5, max = 128, message = "Confirm Password must be between 5 and 128 characters")
 	private String confirm;
+	
+	private Boolean isAdmin;
 
 	// This will not allow the createdAt column to be updated after creation
 	@Column(updatable = false)
@@ -111,6 +113,14 @@ public class User {
 
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	public Date getCreatedAt() {
