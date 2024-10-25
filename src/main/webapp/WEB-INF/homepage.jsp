@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta charset="ISO-8859-1">
 <title>Welcome <c:out value="${ user.firstName}" /></title>
@@ -29,7 +29,7 @@
     <a href="/comics/new" class="btn btn-primary">Add A New Comic</a>
     <a href="/logout" class="btn btn-danger">Logout</a>
 
-    <h2>All Comics</h2>
+    <h2>All Of Our Comics</h2>
     <table class="table">
         <thead>
             <tr>
@@ -50,13 +50,11 @@
                     <td><c:out value="${comic.author}" /></td>
                     <td><c:out value="${comic.numOfPages}" /></td>
                     <td>
-                        <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image">
-                    </td>
+                        <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;">
+                    </td> 
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-<img src="/uploads/cover_pictures/spidermanComicCover.jpg"/>
-
 </body>
 </html>

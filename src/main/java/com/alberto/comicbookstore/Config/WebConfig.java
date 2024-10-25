@@ -11,8 +11,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Map '/uploads/coverImage/**' to the physical directory 'uploads/coverImage/'
-        registry.addResourceHandler("/uploads/coverImage/**")
-                .addResourceLocations("file:uploads/coverImage/");
+        registry.addResourceHandler("/uploads/cover_pictures/**")
+                .addResourceLocations("file:uploads/cover_pictures/");
     }
 }
 
