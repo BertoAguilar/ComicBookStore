@@ -29,7 +29,7 @@
     <a href="/comics/new" class="btn btn-primary">Add A New Comic</a>
     <a href="/logout" class="btn btn-danger">Logout</a>
 
-    <h2>All Comics</h2>
+    <h2>All Of Our Comics</h2>
     <table class="table">
         <thead>
             <tr>
