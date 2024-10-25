@@ -50,13 +50,11 @@
                     <td><c:out value="${comic.author}" /></td>
                     <td><c:out value="${comic.numOfPages}" /></td>
                     <td>
-                        <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image">
-                    </td>
+                        <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;">
+                    </td> 
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-<img src="/uploads/cover_pictures/spidermanComicCover.jpg"/>
-
 </body>
 </html>
