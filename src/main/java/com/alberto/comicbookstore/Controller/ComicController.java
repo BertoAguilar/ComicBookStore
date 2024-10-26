@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -97,4 +98,22 @@ public class ComicController {
             return "redirect:/comics/new";
         }
     }
+	
+	//Shows you all the details of a comic
+	@GetMapping("/comic/details/{comicId}")
+	public String showComicDetails(@PathVariable("comicId") Long comicId, HttpSession session, Model model) {
+		Long userId = (Long) session.getAttribute("userId");
+		if (userId == null) {
+			return "redirect:/";
+		}
+
+		Comic comic = comicService.findComic(comicId);
+		if (comic == null) {
+			return "redirect:/comics";
+		}
+		model.addAttribute("comic", comic);
+		model.addAttribute("userId", userId);
+
+		return "comicDetails.jsp";
+	}
 }

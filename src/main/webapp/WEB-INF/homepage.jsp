@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html> 
+<html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Welcome <c:out value="${ user.firstName}" /></title>
@@ -22,36 +22,33 @@
 
 </head>
 <body>
-    <h1>
-        Welcome
-        <c:out value="${user.firstName}" />
-    </h1>
-    <a href="/comics/new" class="btn btn-primary">Add A New Comic</a>
-    <a href="/logout" class="btn btn-danger">Logout</a>
+	<c:if test="${user.isAdmin == true}">
+		<h1>Welcome Admin <c:out value="${user.firstName}" /></h1>
+		<a href="/comics/new" class="btn btn-primary">Add A New Comic</a>
+	</c:if>
+	<c:if test="${user.isAdmin == null or user.isAdmin == false}">
+		<h1>Welcome <c:out value="${user.firstName}" /></h1>
+	</c:if>
+	<a href="/comics/new" class="btn btn-warning">New Comic *TO BE REMOVED BEFORE DEPLOYMENT*</a>
+	<a href="/logout" class="btn btn-danger">Logout</a>
 
-    <h2>All Of Our Comics</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Number of Pages</th>
-                <th>Cover Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="comic" items="${comics}">
-                <tr>
-                    <td>
-                        <a href="/teams/details/${comic.title}">
-                            <c:out value="${comic.title}" />
-                        </a>
-                    </td>
+	<h2>All Of Our Comics</h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Cover Image</th>
+				<th>Author</th>
+				<th>Number of Pages</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="comic" items="${comics}">
+				<tr>
+					<td><a href="/comic/details/${comic.id}"> <c:out value="${comic.title}" /></a></td>
+					<td><a href="/comic/details/${comic.id}"> <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;"></a></td> 
                     <td><c:out value="${comic.author}" /></td>
-                    <td><c:out value="${comic.numOfPages}" /></td>
-                    <td>
-                        <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;">
-                    </td> 
+                    <td><c:out value="${comic.numOfPages}" /></td> 
                 </tr>
             </c:forEach>
         </tbody>
