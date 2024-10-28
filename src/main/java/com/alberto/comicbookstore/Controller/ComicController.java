@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,6 +59,7 @@ public class ComicController {
 		return "newComic.jsp";
 	}
 
+	// Actually creates the new comic
 	@PostMapping("/newComic")
     public String createComic(@Valid @ModelAttribute("comic") Comic comic, BindingResult result,
             @RequestParam("coverPicture") MultipartFile file, HttpSession session) {
@@ -111,9 +114,71 @@ public class ComicController {
 		if (comic == null) {
 			return "redirect:/comics";
 		}
+		model.addAttribute("user", userService.getLoggedInUser(userId));
 		model.addAttribute("comic", comic);
 		model.addAttribute("userId", userId);
 
 		return "comicDetails.jsp";
 	}
+	
+	// Takes you to update comic form where you can make changes
+	@GetMapping("/comics/edit/{id}")
+	public String editComic(@PathVariable("id") Long id, Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		Comic comic = comicService.findComic(id);
+		model.addAttribute("comic", comic);
+		return "editComic.jsp";
+	}
+	
+	// Updates the Comic
+	@PutMapping("/comics/{id}")
+	public String updateComic(@Valid @ModelAttribute("comic") Comic comic, BindingResult result, Model model,
+			HttpSession session,@RequestParam("coverPicture") MultipartFile file) {
+		if (result.hasErrors()) {
+			model.addAttribute("comic", comic);
+			return "editComic.jsp";
+		}
+		Long userId = (Long) session.getAttribute("userId");
+		if (userId == null) {
+			return "redirect:/";
+		}         String uploadDir = "uploads/cover_pictures/";
+        Path uploadPath = Paths.get(uploadDir);
+        
+        try {
+            // Create the directory if it doesn't exist
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Handle file upload
+            if (!file.isEmpty()) {
+                String fileName = file.getOriginalFilename();
+                Path path = Paths.get(uploadDir + fileName);
+                try {
+                    // Save file to a directory
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                    comic.setCoverImage(fileName); // Set path to comic entity
+                } catch (IOException e) {
+                    e.printStackTrace(); // Handle error, maybe show a message to the user
+                }
+            }
+
+            comicService.updateComic(comic);
+            return "redirect:/Home";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/Home";
+        }
+	}
+	
+	// Delete a comic by id
+	@DeleteMapping("/comics/destroy/{id}")
+	public String destroyComic(@PathVariable("id") Long id) {
+		comicService.deleteComic(id);
+		return "redirect:/Home";
+	}
+	
 }

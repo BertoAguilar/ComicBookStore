@@ -49,7 +49,6 @@ public class Comic {
 	@Max(value = 500, message = "Comic Book Must Have Fewer Than 500 Pages")
 	private Integer numOfPages;
 	
-
 	private String coverImage;
 	
 	@Column(updatable = false)
