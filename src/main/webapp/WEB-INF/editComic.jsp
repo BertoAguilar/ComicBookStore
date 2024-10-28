@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Add Your Comic!</title>
+<title>Edit ${comic.title}</title>
 <!-- for Bootstrap CSS -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 <!-- YOUR own local CSS -->
@@ -21,8 +21,9 @@
 </head>
 <body>
 	<div>
-		<h1>New Comic</h1>
-		<form:form action="/newComic" method="POST" modelAttribute="comic" enctype="multipart/form-data">
+		<h1>Edit Comic</h1>
+		<form:form action="/comics/${comic.id}" method="post" modelAttribute="comic" enctype="multipart/form-data">
+		<input type="hidden" name="_method" value="put">
 			<p>
 				<form:label path="title">Title</form:label>
 				<form:errors path="title" class="text-danger" />

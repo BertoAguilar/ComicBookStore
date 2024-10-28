@@ -29,7 +29,7 @@
 	<c:if test="${user.isAdmin == null or user.isAdmin == false}">
 		<h1>Welcome <c:out value="${user.firstName}" /></h1>
 	</c:if>
-	<a href="/comics/new" class="btn btn-warning">New Comic *TO BE REMOVED BEFORE DEPLOYMENT*</a>
+	<a href="/genre" class="btn btn-primary">Genre</a>
 	<a href="/logout" class="btn btn-danger">Logout</a>
 
 	<h2>All Of Our Comics</h2>
@@ -38,17 +38,13 @@
 			<tr>
 				<th>Title</th>
 				<th>Cover Image</th>
-				<th>Author</th>
-				<th>Number of Pages</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="comic" items="${comics}">
 				<tr>
 					<td><a href="/comic/details/${comic.id}"> <c:out value="${comic.title}" /></a></td>
-					<td><a href="/comic/details/${comic.id}"> <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;"></a></td> 
-                    <td><c:out value="${comic.author}" /></td>
-                    <td><c:out value="${comic.numOfPages}" /></td> 
+					<td><a href="/comic/details/${comic.id}"> <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;"></a></td>
                 </tr>
             </c:forEach>
         </tbody>

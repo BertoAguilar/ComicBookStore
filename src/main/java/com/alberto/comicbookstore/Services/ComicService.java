@@ -35,4 +35,14 @@ public class ComicService {
 			return null;
 		}
 	}
+	
+	// updates a comic
+	public Comic updateComic(Comic comic) {
+		return comicRepo.save(comic);
+	}
+
+	// Deletes a comic
+	public void deleteComic(Long id) {
+		comicRepo.deleteById(id);
+	}
 }

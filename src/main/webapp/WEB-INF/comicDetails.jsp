@@ -6,7 +6,7 @@
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 <meta charset="ISO-8859-1">
 <title><c:out value="${comic.title}" /></title>
 <!-- for Bootstrap CSS -->
@@ -27,6 +27,13 @@
 	<p>Written By: <c:out value="${comic.author}" /></p>
 	<p>Number Of Pages: <c:out value="${comic.numOfPages}" /></p>
 	
-	<a href="/Home" class="btn btn-primary">Home</a>
-</body>
+	<a href="/Home" class="btn btn-primary">Home</a>	
+	<c:if test="${user.isAdmin == true}">
+		<a href="/comics/edit/${comic.id}" class="btn btn-warning">Edit</a>
+		<form action="/comics/destroy/${comic.id}" method="post">
+			<input type="hidden" name="_method" value="delete"> 
+			<input type="submit" value="Delete" class="btn btn-danger">
+		</form>
+	</c:if>
+	</body>
 </html>
