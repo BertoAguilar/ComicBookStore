@@ -43,7 +43,11 @@
 				<form:errors path="numOfPages" class="text-danger" />
 				<form:input type="number" path="numOfPages" class="input-group" />
 			</p>
-
+			<p>
+				<c:forEach var="genre" items="${genres}">
+					<form:label path="genres"><c:out value="${genre.name}"></c:out></form:label>
+					<form:checkbox path="genres" value="${genre}"/>
+				</c:forEach>
 
             <div>
                 <form:label path="coverImage">Comic Book Cover</form:label>

@@ -1,5 +1,6 @@
 package com.alberto.comicbookstore.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alberto.comicbookstore.Models.Comic;
+import com.alberto.comicbookstore.Models.Genre;
 import com.alberto.comicbookstore.Repository.ComicRepository;
 
 
@@ -15,6 +17,9 @@ import com.alberto.comicbookstore.Repository.ComicRepository;
 public class ComicService {
 	@Autowired
 	ComicRepository comicRepo;
+	
+	@Autowired
+	GenreService genreServ;
 
 	// returns all the comics
 	public List<Comic> allComics() {
