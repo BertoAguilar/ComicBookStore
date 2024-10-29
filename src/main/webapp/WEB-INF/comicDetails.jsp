@@ -50,6 +50,11 @@
 		alt="${comic.title}'s Cover Image" style="width: 150px;"></p>
 	<p>Written By: <c:out value="${comic.author}" /></p>
 	<p>Number Of Pages: <c:out value="${comic.numOfPages}" /></p>
+	<p>Genres: 
+	<c:forEach var="genre" items="${comic.genres}">
+		<c:out value="${genre.name}"></c:out>			
+	</c:forEach>
+	</p>
 	
 	<a href="/Home" class="btn btn-primary">Home</a>	
 	<c:if test="${user.isAdmin == true}">
