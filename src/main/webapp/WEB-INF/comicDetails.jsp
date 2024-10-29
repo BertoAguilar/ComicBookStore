@@ -20,7 +20,31 @@
 
 </head>
 <body>
-
+<c:set var="isAdmin" value="#{user.isAdmin == true}" />
+<c:set var="isNotAdmin" value="#{user.isAdmin == null or user.isAdmin == false}"/>
+	<nav class="navbar navbar-expand-lg border border-secondary mb-3" style="background-color: #e1ecfd">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Comic Book Store</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+          				<a class="nav-link" aria-current="page" href="/Home">Dashboard</a>
+        			</li>
+        			<li class="nav-item">
+          				<a class="nav-link" aria-current="page" href="/genre">Add/View Genres</a>
+        			</li>
+        			<c:if test="${isAdmin}">
+	        			<li class="nav-item">
+    	      				<a class="nav-link" aria-current="page" href="/comics/new">Add a New Comic!</a>
+        				</li>
+        			</c:if>
+        			<li class="nav-item">
+          				<a href="/logout" class="nav-link">Logout</a>
+        			</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<h1><c:out value="${comic.title}" /></h1>
 	<p><img src="/uploads/cover_pictures/${comic.coverImage}"
 		alt="${comic.title}'s Cover Image" style="width: 150px;"></p>

@@ -51,11 +51,12 @@ public class ComicController {
 
 	// Takes you to a form to create a new comic
 	@GetMapping("/comics/new")
-	public String newComic(@ModelAttribute("comic") Comic comic, HttpSession session) {
+	public String newComic(@ModelAttribute("comic") Comic comic, HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("userId");
 		if (userId == null) {
 			return "redirect:/";
 		}
+		model.addAttribute("user", userService.getLoggedInUser(userId));
 		return "newComic.jsp";
 	}
 
@@ -128,6 +129,7 @@ public class ComicController {
 		if (userId == null) {
 			return "redirect:/";
 		}
+		model.addAttribute("user", userService.getLoggedInUser(userId));
 		Comic comic = comicService.findComic(id);
 		model.addAttribute("comic", comic);
 		return "editComic.jsp";

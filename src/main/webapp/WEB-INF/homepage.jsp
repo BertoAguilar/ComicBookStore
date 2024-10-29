@@ -22,32 +22,57 @@
 
 </head>
 <body>
-	<c:if test="${user.isAdmin == true}">
-		<h1>Welcome Admin <c:out value="${user.firstName}" /></h1>
-		<a href="/comics/new" class="btn btn-primary">Add A New Comic</a>
-	</c:if>
-	<c:if test="${user.isAdmin == null or user.isAdmin == false}">
-		<h1>Welcome <c:out value="${user.firstName}" /></h1>
-	</c:if>
-	<a href="/genre" class="btn btn-primary">Genre</a>
-	<a href="/logout" class="btn btn-danger">Logout</a>
-
-	<h2>All Of Our Comics</h2>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Cover Image</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="comic" items="${comics}">
-				<tr>
-					<td><a href="/comic/details/${comic.id}"> <c:out value="${comic.title}" /></a></td>
-					<td><a href="/comic/details/${comic.id}"> <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;"></a></td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+<c:set var="isAdmin" value="#{user.isAdmin == true}" />
+<c:set var="isNotAdmin" value="#{user.isAdmin == null or user.isAdmin == false}"/>
+	<nav class="navbar navbar-expand-lg border border-secondary mb-3" style="background-color: #e1ecfd">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Comic Book Store</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+          				<a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+        			</li>
+        			<li class="nav-item">
+          				<a class="nav-link" aria-current="page" href="/genre">Add/View Genres</a>
+        			</li>
+        			<c:if test="${isAdmin}">
+	        			<li class="nav-item">
+    	      				<a class="nav-link" aria-current="page" href="/comics/new">Add a New Comic!</a>
+        				</li>
+        			</c:if>
+        			<li class="nav-item">
+          				<a href="/logout" class="nav-link">Logout</a>
+        			</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container" style="width: 75%">
+		<c:if test="${isAdmin}">
+			<h1>Welcome, Admin <c:out value="${user.firstName}" /></h1>
+		</c:if>
+		<c:if test="${isNotAdmin}">
+			<h1>Welcome, <c:out value="${user.firstName}" /></h1>
+		</c:if>
+		<div class="container mt-3" style="width: 60%">
+			<h2>All Of Our Comics</h2>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Cover Image</th>
+					</tr>
+				</thead>
+				<tbody class="table-group-divider">
+					<c:forEach var="comic" items="${comics}">
+						<tr>
+							<td><a href="/comic/details/${comic.id}"> <c:out value="${comic.title}" /></a></td>
+							<td><a href="/comic/details/${comic.id}"> <img src="/uploads/cover_pictures/${comic.coverImage}" alt="${comic.title}'s Cover Image" style="width:150px;"></a></td>
+		                </tr>
+		            </c:forEach>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
 </body>
 </html>
