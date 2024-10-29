@@ -24,7 +24,7 @@ public class Genre {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty
+	@NotEmpty(message="Must name the genre!")
 	private String name;
 	
 	@Column(updatable = false)

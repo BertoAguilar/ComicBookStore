@@ -19,63 +19,80 @@
 
 </head>
 <body>
-		<div>
-			<div>
-				<form:form action="/register/user" method="post" modelAttribute="newUser">
-					<h1>Register</h1>
-					<p>Please enter your email and create a password!</p>
-					<p>
-						<form:label path="firstName">First Name</form:label>
-						<form:errors path="firstName" class="text-danger"/>
-						<form:input type="text" path="firstName" placeholder="First Name" />
-					</p>
-					<p>
-						<form:label path="lastName">Last Name</form:label>
-						<form:errors class="text-danger" path="lastName" />
-						<form:input type="text" path="lastName" placeholder="Last Name" />
-					</p>
-					<p>
-						<form:label path="email">Email</form:label>
-						<form:errors class="text-danger" path="email" />
-						<form:input type="email" path="email" placeholder="Email" />
-					</p>
-					<p>
-						<form:label path="password">Password</form:label>
-						<form:errors class="text-danger" path="password" />
-						<form:input type="password" path="password" placeholder="Password" />
-					</p>
-					<p>
-						<form:label path="confirm">Confirm Password</form:label>
-						<form:errors class="text-danger" path="confirm" />
-						<form:input type="password" path="confirm"
-							placeholder="Confirm Password" />
-					</p>
-					<input type="submit" name="" value="Login">
-				</form:form>
+	<nav class="navbar navbar-expand-lg border border-secondary" style="background-color: #e1ecfd">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Comic Book Store</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+          				<a class="nav-link active" aria-current="page" href="#">Login</a>
+        			</li>
+				</ul>
 			</div>
 		</div>
-		<div>
+	</nav>
+	<div class="container" style="width: 60%">
+		<h3 class="fw-lighter fst-italic text-secondary-emphasis m-3">A place for comic lovers of all ages!</h3>
+		<div class="d-flex justify-content-around">
 			<div>
 				<div>
-					<form:form action="/login/user" method="post"
-						modelAttribute="newLogin">
-						<h1>Login</h1>
-						<p>Please enter your Email and Password!</p>
-						<p>
-							<form:label path="email">Email</form:label>
+					<form:form action="/register/user" method="post" modelAttribute="newUser">
+						<h2>Register</h2>
+						<p class="fw-lighter fst-italic text-secondary-emphasis">Please enter your email and create a password!</p>
+						<div class="mb-2">
+							<form:label class="form-label" path="firstName">First Name</form:label>
+							<form:input class="form-control" type="text" path="firstName" placeholder="First Name" />
+							<form:errors path="firstName" class="text-danger"/>
+						</div>
+						<div class="mb-2">
+							<form:label class="form-label" path="lastName">Last Name</form:label>
+							<form:input class="form-control" type="text" path="lastName" placeholder="Last Name" />
+							<form:errors class="text-danger" path="lastName" />
+						</div>
+						<div class="mb-2">
+							<form:label class="form-label" path="email">Email</form:label>
+							<form:input class="form-control" type="email" path="email" placeholder="Email" />
 							<form:errors class="text-danger" path="email" />
-							<form:input type="email" path="email" placeholder="Email" />
-						</p>
-						<p>
-							<form:label path="password">Password</form:label>
+						</div>
+						<div class="mb-2">
+							<form:label class="form-label" path="password">Password</form:label>
+							<form:input class="form-control" type="password" path="password" placeholder="Password" />
 							<form:errors class="text-danger" path="password" />
-							<form:input type="password" path="password"
-								placeholder="Password" />
-						</p>
-						<input type="submit" name="" value="Login">
+						</div>
+						<div class="mb-2">
+							<form:label class="form-label" path="confirm">Confirm Password</form:label>
+							<form:input class="form-control" type="password" path="confirm"
+								placeholder="Confirm Password" />
+							<form:errors class="text-danger" path="confirm" />
+						</div>
+						<input class="btn btn-primary" type="submit" name="" value="Register">
 					</form:form>
 				</div>
 			</div>
+			<div>
+				<div>
+					<div>
+						<form:form action="/login/user" method="post"
+							modelAttribute="newLogin">
+							<h2>Login</h2>
+							<p class="fw-lighter fst-italic text-secondary-emphasis">Please enter your Email and Password!</p>
+							<div class="mb-2">
+								<form:label class="form-label" path="email">Email</form:label>
+								<form:input class="form-control" type="email" path="email" placeholder="Email" />
+								<form:errors class="text-danger" path="email" />
+							</div>
+							<div class="mb-2">
+								<form:label class="form-label" path="password">Password</form:label>
+								<form:input class="form-control" type="password" path="password"
+									placeholder="Password" />
+								<form:errors class="text-danger" path="password" />
+							</div>
+							<input class="btn btn-primary" type="submit" name="" value="Login">
+						</form:form>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
 </body>
 </html>
