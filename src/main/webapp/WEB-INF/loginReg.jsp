@@ -42,28 +42,28 @@
 						<div class="mb-2">
 							<form:label class="form-label" path="firstName">First Name</form:label>
 							<form:input class="form-control" type="text" path="firstName" placeholder="First Name" />
-							<form:errors path="firstName" class="text-danger"/>
+							<form:errors class="fw-lighter fst-italic text-danger" path="firstName"/>
 						</div>
 						<div class="mb-2">
 							<form:label class="form-label" path="lastName">Last Name</form:label>
 							<form:input class="form-control" type="text" path="lastName" placeholder="Last Name" />
-							<form:errors class="text-danger" path="lastName" />
+							<form:errors class="fw-lighter fst-italic text-danger" path="lastName" />
 						</div>
 						<div class="mb-2">
 							<form:label class="form-label" path="email">Email</form:label>
 							<form:input class="form-control" type="email" path="email" placeholder="Email" />
-							<form:errors class="text-danger" path="email" />
+							<form:errors class="fw-lighter fst-italic text-danger" path="email" />
 						</div>
 						<div class="mb-2">
 							<form:label class="form-label" path="password">Password</form:label>
 							<form:input class="form-control" type="password" path="password" placeholder="Password" />
-							<form:errors class="text-danger" path="password" />
+							<form:errors class="fw-lighter fst-italic text-danger" path="password" />
 						</div>
 						<div class="mb-2">
 							<form:label class="form-label" path="confirm">Confirm Password</form:label>
 							<form:input class="form-control" type="password" path="confirm"
 								placeholder="Confirm Password" />
-							<form:errors class="text-danger" path="confirm" />
+							<form:errors class="fw-lighter fst-italic text-danger" path="confirm" />
 						</div>
 						<input class="btn btn-primary" type="submit" name="" value="Register">
 					</form:form>
@@ -79,13 +79,13 @@
 							<div class="mb-2">
 								<form:label class="form-label" path="email">Email</form:label>
 								<form:input class="form-control" type="email" path="email" placeholder="Email" />
-								<form:errors class="text-danger" path="email" />
+								<form:errors class="fw-lighter fst-italic text-danger" path="email" />
 							</div>
 							<div class="mb-2">
 								<form:label class="form-label" path="password">Password</form:label>
 								<form:input class="form-control" type="password" path="password"
 									placeholder="Password" />
-								<form:errors class="text-danger" path="password" />
+								<form:errors class="fw-lighter fst-italic text-danger" path="password" />
 							</div>
 							<input class="btn btn-primary" type="submit" name="" value="Login">
 						</form:form>

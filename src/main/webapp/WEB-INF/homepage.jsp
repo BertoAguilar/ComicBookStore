@@ -30,7 +30,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-          				<a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+          				<a class="nav-link active" aria-current="page" href="#">Home</a>
         			</li>
         			<li class="nav-item">
           				<a class="nav-link" aria-current="page" href="/genre">Add/View Genres</a>
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container" style="width: 75%">
+	<div class="container bg-primary-subtle" style="width: 75%">
 		<c:if test="${isAdmin}">
 			<h1>Welcome, Admin <c:out value="${user.firstName}" /></h1>
 		</c:if>
