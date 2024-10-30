@@ -69,11 +69,16 @@
 				<form:input class="form-control" min="1" max="500" type="number" path="numOfPages"/>
 				<form:errors class="fw-lighter fst-italic text-danger" path="numOfPages"/>
 			</div>
-
-
+			<div class="mb-3">
+				<h6>Select the genre(s)</h6>
+				<c:forEach var="genre" items="${genres}">
+					<form:label class="form-check-label" path="genres"><c:out value="${genre.name}"></c:out></form:label>
+					<form:checkbox class="form-check-input me-3" path="genres" value="${genre}"/>
+				</c:forEach>
+			</div>
             <div class="mb-2">
                 <form:label class="form-label" path="coverImage">Comic Book Cover</form:label>
-                <input type="file" required id="coverPicture" name="coverPicture"/>
+                <input type="file" id="coverPicture" name="coverPicture"/>
                 <form:errors class="fw-lighter fst-italic text-danger" path="coverImage"/>
             </div>
 

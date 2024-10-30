@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,48 +137,56 @@ public class ComicController {
 		model.addAttribute("user", userService.getLoggedInUser(userId));
 		Comic comic = comicService.findComic(id);
 		model.addAttribute("comic", comic);
+		model.addAttribute("genres", genreService.allGenres());
 		return "editComic.jsp";
 	}
 	
 	// Updates the Comic
 	@PutMapping("/comics/{id}")
-	public String updateComic(@Valid @ModelAttribute("comic") Comic comic, BindingResult result, Model model,
-			HttpSession session,@RequestParam("coverPicture") MultipartFile file) {
-		if (result.hasErrors()) {
-			model.addAttribute("comic", comic);
-			return "editComic.jsp";
-		}
-		Long userId = (Long) session.getAttribute("userId");
-		if (userId == null) {
-			return "redirect:/";
-		}         String uploadDir = "uploads/cover_pictures/";
-        Path uploadPath = Paths.get(uploadDir);
-        
-        try {
-            // Create the directory if it doesn't exist
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
+	public String updateComic(@PathVariable("id") Long id, @Valid @ModelAttribute("comic") Comic comic,
+	        BindingResult result, Model model, HttpSession session, @RequestParam("coverPicture") MultipartFile file) {
+	    if (result.hasErrors()) {
+	        model.addAttribute("comic", comic);
+	        return "editComic.jsp";
+	    }
+	    Long userId = (Long) session.getAttribute("userId");
+	    if (userId == null) {
+	        return "redirect:/";
+	    }
 
-            // Handle file upload
-            if (!file.isEmpty()) {
-                String fileName = file.getOriginalFilename();
-                Path path = Paths.get(uploadDir + fileName);
-                try {
-                    // Save file to a directory
-                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                    comic.setCoverImage(fileName); // Set path to comic entity
-                } catch (IOException e) {
-                    e.printStackTrace(); // Handle error, maybe show a message to the user
-                }
-            }
+	    // Retrieve existing comic to retain the current cover image if no new file is uploaded
+	    Comic existingComic = comicService.findComic(id);
+	    if (existingComic == null) {
+	        return "redirect:/Home";
+	    }
 
-            comicService.updateComic(comic);
-            return "redirect:/Home";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "redirect:/Home";
-        }
+	    String uploadDir = "uploads/cover_pictures/";
+	    Path uploadPath = Paths.get(uploadDir);
+
+	    try {
+	        // Create the directory if it doesn't exist
+	        if (!Files.exists(uploadPath)) {
+	            Files.createDirectories(uploadPath);
+	        }
+
+	        // Handle file upload if a new file is provided
+	        if (!file.isEmpty()) {
+	            String fileName = file.getOriginalFilename();
+	            Path path = Paths.get(uploadDir + fileName);
+	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+	            comic.setCoverImage(fileName); // Set the new cover image path
+	        } else {
+	            // Retain the existing cover image path
+	            comic.setCoverImage(existingComic.getCoverImage());
+	        }
+
+	        // Update comic in the database
+	        comicService.updateComic(comic);
+	        return "redirect:/Home";
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "redirect:/Home";
+	    }
 	}
 	
 	// Delete a comic by id
