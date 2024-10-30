@@ -1,10 +1,12 @@
 package com.alberto.comicbookstore.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -69,6 +71,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Comic> comics;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Rental> rentals = new ArrayList<>();
 
 	public User() {
 	}
@@ -151,6 +156,14 @@ public class User {
 
 	public void setComics(List<Comic> comics) {
 		this.comics = comics;
+	}
+
+	public List<Rental> getRentals() {
+		return rentals;
+	}
+
+	public void setRentals(List<Rental> rentals) {
+		this.rentals = rentals;
 	}
 
 }
