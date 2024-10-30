@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alberto.comicbookstore.Models.Comic;
+import com.alberto.comicbookstore.Models.Comment;
+import com.alberto.comicbookstore.Services.ComicService;
+import com.alberto.comicbookstore.Services.CommentService;
 import com.alberto.comicbookstore.Models.Genre;
 import com.alberto.comicbookstore.Services.ComicService;
 import com.alberto.comicbookstore.Services.GenreService;
@@ -40,6 +43,9 @@ public class ComicController {
 	ComicService comicService;
 	
 	@Autowired
+	CommentService commentService;
+  
+  @Autowired
 	GenreService genreService;
 
 	// Home Page
@@ -111,7 +117,7 @@ public class ComicController {
 	
 	//Shows you all the details of a comic
 	@GetMapping("/comic/details/{comicId}")
-	public String showComicDetails(@PathVariable("comicId") Long comicId, HttpSession session, Model model) {
+	public String showComicDetails(@PathVariable("comicId") Long comicId, @ModelAttribute("comment") Comment comment, HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("userId");
 		if (userId == null) {
 			return "redirect:/";
@@ -124,6 +130,9 @@ public class ComicController {
 		model.addAttribute("user", userService.getLoggedInUser(userId));
 		model.addAttribute("comic", comic);
 		model.addAttribute("userId", userId);
+		
+		List<Comment>comments = commentService.allComments();
+		model.addAttribute("comments", comments);
 
 		return "comicDetails.jsp";
 	}
