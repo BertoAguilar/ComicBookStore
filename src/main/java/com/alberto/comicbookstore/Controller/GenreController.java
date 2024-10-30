@@ -58,5 +58,5 @@ public class GenreController {
 	public String destroy(@PathVariable("id") Long id) {
 		genreServ.deleteGenre(id);
 		return "redirect:/genre";
-	}
+	} 
 }
