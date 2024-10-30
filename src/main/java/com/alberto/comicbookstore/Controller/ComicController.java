@@ -22,11 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alberto.comicbookstore.Models.Comic;
 import com.alberto.comicbookstore.Models.Comment;
+import com.alberto.comicbookstore.Models.Genre;
+import com.alberto.comicbookstore.Models.Rental;
+import com.alberto.comicbookstore.Models.User;
 import com.alberto.comicbookstore.Services.ComicService;
 import com.alberto.comicbookstore.Services.CommentService;
-import com.alberto.comicbookstore.Models.Genre;
-import com.alberto.comicbookstore.Services.ComicService;
 import com.alberto.comicbookstore.Services.GenreService;
+import com.alberto.comicbookstore.Services.RentalService;
 import com.alberto.comicbookstore.Services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,8 +46,11 @@ public class ComicController {
 	@Autowired
 	CommentService commentService;
   
-  @Autowired
+	@Autowired
 	GenreService genreService;
+	
+	@Autowired
+	RentalService rentalService;
 
 	// Home Page
 	@GetMapping("/Home")
@@ -55,8 +60,15 @@ public class ComicController {
 			return "redirect:/";
 		}
 		model.addAttribute("user", userService.getLoggedInUser(userId));
+		// Fetch all comics
 		List<Comic> comicList = comicService.allComics();
 		model.addAttribute("comics", comicList);
+		// Fetch IDs of currently rented comics
+		List<Long> rentedComicIds = rentalService.findRentedComicIds();
+		model.addAttribute("rentedComicIds", rentedComicIds);
+		// Fetch comics rented by the logged-in user
+		List<Rental> rentedComics = rentalService.findRentalsByUser(userId);
+		model.addAttribute("rentedComics", rentedComics);
 		return "homepage.jsp";
 	}
 
@@ -200,6 +212,41 @@ public class ComicController {
 	        e.printStackTrace();
 	        return "redirect:/Home";
 	    }
+	}
+	
+	// Rent a comic
+	@PostMapping("/comics/rent/{comicId}")
+	public String rentComic(@PathVariable("comicId") Long comicId, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+	    if (userId == null) {
+	        return "redirect:/";
+	    }
+	    
+	    User user = userService.getLoggedInUser(userId);
+	    Comic comic = comicService.findComic(comicId);
+	    
+	    if(comic != null && user != null) {
+	    	Rental rental = new Rental();
+	    	rental.setUser(user);
+	    	rental.setComic(comic);
+	    	rentalService.createRental(rental);
+	    }
+	    return "redirect:/Home";
+	}
+	
+	// Return a comic
+	@PostMapping("/comics/return/{rentalId}")
+	public String returnComic(@PathVariable("rentalId") Long rentalId, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+	    if (userId == null) {
+	        return "redirect:/";
+	    }
+	    
+	    Rental rental = rentalService.findRentalById(rentalId);
+	    if (rental != null && rental.getUser().getId().equals(userId)) {
+	    	rentalService.deleteRental(rentalId);
+	    }
+	    return "redirect:/Home";
 	}
 
 	
