@@ -26,7 +26,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-          				<a class="nav-link" aria-current="page" href="/Home">Dashboard</a>
+          				<a class="nav-link" aria-current="page" href="/Home">Home</a>
         			</li>
         			<li class="nav-item">
           				<a class="nav-link active" aria-current="page" href="#">Add/View Genres</a>
@@ -43,37 +43,40 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container" style="width: 60%">
+	<div class="container" style="width: 50%">
     <h2>Create Genre</h2>
 	    <form:form action="/genre" method="POST" modelAttribute="genre">
 	        <form:label class="form-label" path="name">Name: </form:label>
 	        <form:input class="form-control" type="text" path="name"/>
 	        <form:errors class="fw-lighter fst-italic text-danger" path="name"/>
 	
-	        <form:button class="btn btn-primary btn-sm" type="submit" value="submit">Create</form:button>
+	        <form:button class="btn btn-primary btn-sm mt-2" type="submit" value="submit">Create</form:button>
 	    </form:form>
-	    <h2>Genres</h2>
-	    <table>
-	        <thead>
-	            <tr>
-	                <th>Name</th>
-	            </tr>
-	        </thead>
-	
-	        <tbody>
-	            <c:forEach var="genre" items="${genres}">
-	                <tr>
-	                    <td><c:out value="${genre.name}"></c:out></td>
-	                </tr>
-	                <td>
-	                    <form action="/genre/delete/${genre.id}" method="post">
-	                        <input type="hidden" name="_method" value="delete">
-	                        <button class="btn btn-danger btn-sm" type="submit" value="Delete">Delete</button>
-	                    </form>
-	                </td>
-	            </c:forEach>
-	        </tbody>
-	    </table>
+	    <div class="container" style="width: 50%">
+		    <h2>Genres</h2>
+		    <table class="table table-hover">
+		        <thead>
+		            <tr>
+		                <th>Name</th>
+		                <th></th>
+		            </tr>
+		        </thead>
+		
+		        <tbody>
+		            <c:forEach var="genre" items="${genres}">
+		                <tr>
+		                    <td><c:out value="${genre.name}"></c:out></td>
+		                <td>
+		                    <form action="/genre/delete/${genre.id}" method="post">
+		                        <input type="hidden" name="_method" value="delete">
+		                        <button class="btn btn-danger btn-sm" type="submit" value="Delete">Delete</button>
+		                    </form>
+		                </td>
+		                </tr>
+		            </c:forEach>
+		        </tbody>
+		    </table>
+	    </div>
 	</div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ import com.alberto.comicbookstore.Models.Comic;
 import com.alberto.comicbookstore.Models.Comment;
 import com.alberto.comicbookstore.Services.ComicService;
 import com.alberto.comicbookstore.Services.CommentService;
+import com.alberto.comicbookstore.Models.Genre;
+import com.alberto.comicbookstore.Services.ComicService;
+import com.alberto.comicbookstore.Services.GenreService;
 import com.alberto.comicbookstore.Services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +44,9 @@ public class ComicController {
 	
 	@Autowired
 	CommentService commentService;
+  
+  @Autowired
+	GenreService genreService;
 
 	// Home Page
 	@GetMapping("/Home")
@@ -58,6 +65,7 @@ public class ComicController {
 	@GetMapping("/comics/new")
 	public String newComic(@ModelAttribute("comic") Comic comic, HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("userId");
+		model.addAttribute("genres", genreService.allGenres());
 		if (userId == null) {
 			return "redirect:/";
 		}
@@ -67,7 +75,7 @@ public class ComicController {
 
 	// Actually creates the new comic
 	@PostMapping("/newComic")
-    public String createComic(@Valid @ModelAttribute("comic") Comic comic, BindingResult result,
+    public String createComic(@Valid @ModelAttribute("comic") Comic comic, @ModelAttribute("genres") Genre genre, BindingResult result,
             @RequestParam("coverPicture") MultipartFile file, HttpSession session) {
         if (result.hasErrors()) {
             return "newComic.jsp";
@@ -99,7 +107,6 @@ public class ComicController {
                     e.printStackTrace(); // Handle error, maybe show a message to the user
                 }
             }
-
             comicService.createComic(comic);
             return "redirect:/Home";
         } catch (IOException e) {
