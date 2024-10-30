@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alberto.comicbookstore.Models.Comic;
+import com.alberto.comicbookstore.Models.Comment;
+import com.alberto.comicbookstore.Models.Genre;
 import com.alberto.comicbookstore.Repository.ComicRepository;
+import com.alberto.comicbookstore.Repository.CommentRepository;
 
 
 
@@ -17,6 +20,9 @@ public class ComicService {
 	ComicRepository comicRepo;
 	
 	@Autowired
+	CommentRepository commentRepo;
+  
+  @Autowired
 	GenreService genreServ;
 
 	// returns all the comics
@@ -48,4 +54,18 @@ public class ComicService {
 	public void deleteComic(Long id) {
 		comicRepo.deleteById(id);
 	}
+	
+    public String addCommentToComic(Long id, Comment comment) {
+        Optional<Comic> optionalComic = comicRepo.findById(id);
+        
+        if (optionalComic.isPresent()) {
+            Comic comic = optionalComic.get();
+            
+            comment.setComic(comic);
+            commentRepo.save(comment);
+            return "Comment added successfully";
+        } else {
+            return "Comic not found";
+        }
+    }
 }
