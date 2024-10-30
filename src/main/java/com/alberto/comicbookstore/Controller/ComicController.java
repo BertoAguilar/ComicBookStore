@@ -173,14 +173,18 @@ public class ComicController {
 	        if (!file.isEmpty()) {
 	            String fileName = file.getOriginalFilename();
 	            Path path = Paths.get(uploadDir + fileName);
-	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-	            comic.setCoverImage(fileName); // Set the new cover image path
+	            try {
+                    // Save file to a directory
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                    comic.setCoverImage(fileName); // Set new cover image path
+                } catch (IOException e) {
+                    e.printStackTrace(); // Handle error, maybe show a message to the user
+                }
 	        } else {
 	            // Retain the existing cover image path
 	            comic.setCoverImage(existingComic.getCoverImage());
 	        }
 
-	        // Update comic in the database
 	        comicService.updateComic(comic);
 	        return "redirect:/Home";
 	    } catch (IOException e) {
@@ -188,6 +192,7 @@ public class ComicController {
 	        return "redirect:/Home";
 	    }
 	}
+
 	
 	// Delete a comic by id
 	@DeleteMapping("/comics/destroy/{id}")
