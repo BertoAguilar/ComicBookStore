@@ -1,5 +1,6 @@
 package com.alberto.comicbookstore.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,9 @@ public class Comic {
 	
 	@OneToMany(mappedBy = "comic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Comment> comment;
+	
+	@OneToMany(mappedBy = "comic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Rental> rentals = new ArrayList<>();
 
 	public Comic() {}
 
@@ -173,4 +177,13 @@ public class Comic {
 	public void setComment(List<Comment> comment) {
 		this.comment = comment;
 	}
+
+	public List<Rental> getRentals() {
+		return rentals;
+	}
+
+	public void setRentals(List<Rental> rentals) {
+		this.rentals = rentals;
+	}
+
 }
