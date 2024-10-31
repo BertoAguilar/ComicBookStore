@@ -110,7 +110,7 @@
 			                    <td><fmt:formatDate value="${rental.createdAt}" pattern="MM/dd/yyyy" /></td>
 			                    <td>
 								    <form action="/comics/return/${rental.id}" method="post" style="display:inline;">
-								        <button type="submit" class="btn btn-primary">Return Comic</button>
+								        <button type="submit" class="btn btn-primary mb-3">Return Comic</button>
 								    </form>
 								    <form action="/comics/destroy/${rental.comic.id}" method="post" style="display:inline;">
 						                <input type="hidden" name="_method" value="delete" />
