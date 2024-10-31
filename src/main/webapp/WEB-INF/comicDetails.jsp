@@ -79,59 +79,61 @@
 				</div>
 			</c:if>
 		</div>
+		<div class="container" style="width: 50%">
+			<div class="leaveCommentCard card">
+					<form:form action="/newcomments/${comic.id}" method="POST" modelAttribute="comment">
+					<p>
+						<form:errors path="commentText" class="fw-lighter fst-italic text-danger" />
+						<form:input type="text-area" path="commentText" class="input-group" placeholder="Leave A Comment!" required="yes" minLength="4" maxLength="600"/>
+					</p>
+					<div>
+						<form:label path="isRecommended">Do you Recommend This?</form:label>
+						<div>
+							<form:radiobutton value="True" label="Yes" path="isRecommended" required="yes"/>
+							<form:radiobutton value="False" label="No" path="isRecommended" />
+						</div>
+					</div>
+					<div class="mb-2" style="width: 10%">
+						<form:label path="commentRating">Rating (1-10)</form:label>
+						<form:errors path="commentRating" class="fw-lighter fst-italic text-danger" />
+						<form:input type="number" path="commentRating" class="input-group" step="1" min="1" max="10" required="yes"/>
+					</div>
+					<div class="buttonGroup">
+						<input type="submit" value="Submit" class="btn btn-success" />
+					</div>
+				</form:form>
+			</div>
 	
-	<div class="leaveCommentCard card">
-			<form:form action="/newcomments/${comic.id}" method="POST" modelAttribute="comment">
-			<p>
-				<form:errors path="commentText" class="text-danger" />
-				<form:input type="text-area" path="commentText" class="input-group" placeholder="Leave A Comment!" required="yes"/>
-			</p>
+			
+	
 			<div>
-				<form:label path="isRecommended">Do you Recommend This?</form:label>
-				<div>
-					<form:radiobutton value="True" label="Yes" path="isRecommended" required="yes"/>
-					<form:radiobutton value="False" label="No" path="isRecommended" />
-				</div>
+				<h2>Comments and Ratings</h2>
+			    <c:forEach var="comment" items="${comments}">
+			        <c:if test="${comic.id == comment.comic.id}">
+			            <div class="commentsCard card card-body">
+			                <h3 class="card-title"><c:out value="${comment.user.firstName}" /> <c:out value="${comment.user.lastName}" /></h3>
+			                <p class="card-text"><c:out value="${comment.commentText}" /></p>
+			                <div>
+			                    <c:if test="${comment.isRecommended}">
+			                        <p>My Recommendation: Go Read It!</p>
+			                    </c:if>
+			                    <c:if test="${!comment.isRecommended}">
+			                        <p>My Recommendation: Don't Bother</p>
+			                    </c:if>
+			                    <p>I Rate It A <c:out value="${comment.commentRating}" /> / 10</p>
+			                </div>
+			                <c:if test="${comment.user.id == userId}">
+			                    <div>
+			                        <form action="/comments/destroy/${comment.id}" method="post">
+			                            <input type="hidden" name="_method" value="delete">
+			                            <input type="submit" value="Delete" class="btn btn-danger">
+			                        </form>
+			                    </div>
+			                </c:if>
+			            </div>
+			        </c:if>
+			    </c:forEach>
 			</div>
-			<p>
-				<form:label path="commentRating">Rating</form:label>
-				<form:errors path="commentRating" class="text-danger" />
-				<form:input type="number" path="commentRating" class="input-group" step="1" min="1" max="10" required="yes"/>
-			</p>
-			<div class="buttonGroup">
-				<input type="submit" value="Submit" class="btn btn-success" />
-			</div>
-		</form:form>
-	</div>
-
-		
-
-<div>
-    <c:forEach var="comment" items="${comments}">
-        <c:if test="${comic.id == comment.comic.id}">
-            <div class="commentsCard card card-body">
-                <h3 class="card-title"><c:out value="${comment.user.firstName}" /> <c:out value="${comment.user.lastName}" /></h3>
-                <p class="card-text"><c:out value="${comment.commentText}" /></p>
-                <div>
-                    <c:if test="${comment.isRecommended}">
-                        <p>My Recommendation: Go Read It!</p>
-                    </c:if>
-                    <c:if test="${!comment.isRecommended}">
-                        <p>My Recommendation: Don't Bother</p>
-                    </c:if>
-                    <p>I Rate It A <c:out value="${comment.commentRating}" /> / 10</p>
-                </div>
-                <c:if test="${comment.user.id == userId}">
-                    <div>
-                        <form action="/comments/destroy/${comment.id}" method="post">
-                            <input type="hidden" name="_method" value="delete">
-                            <input type="submit" value="Delete" class="btn btn-danger">
-                        </form>
-                    </div>
-                </c:if>
-            </div>
-        </c:if>
-    </c:forEach>
-</div>
+		</div>	
 	</body>
 </html>

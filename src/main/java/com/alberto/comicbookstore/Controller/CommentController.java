@@ -39,7 +39,9 @@ public class CommentController {
 	@PostMapping("/newcomments/{comicId}")
 	public String createComment(@Valid @ModelAttribute("comment") Comment comment, BindingResult result,
 			HttpSession session, @PathVariable("comicId") Long comicId, Model model, RedirectAttributes redirectAttributes) {
+		Comic oneComic = comics.findComic(comicId);
 		if (result.hasErrors()) {
+			model.addAttribute("comic", oneComic);
 			return "comicDetails.jsp";
 		}
 		
@@ -49,7 +51,6 @@ public class CommentController {
 		}
 		
 		
-		Comic oneComic = comics.findComic(comicId);
 		User loggedInUser = users.getLoggedInUser(userId);
 		
 		List<Comment> commentList = oneComic.getComment();
