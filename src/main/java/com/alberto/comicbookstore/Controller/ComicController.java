@@ -180,6 +180,23 @@ public class ComicController {
         }
 	}
 	
+	@GetMapping("/comics/search")
+	public String searchPage(Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		if (userId == null) {
+			return "redirect:/";
+		}
+		return "comicSearch.jsp";
+	}
+	
+	@GetMapping("/comics/results")
+	public String searchBar(Model model, @RequestParam("search") String search) {
+		if (search != null && search.length() > 0) {
+			model.addAttribute("searchedComics", comicService.findByTitle(search));
+		}
+		return "comicSearch.jsp";
+	}
+	
 	// Delete a comic by id
 	@DeleteMapping("/comics/destroy/{id}")
 	public String destroyComic(@PathVariable("id") Long id) {

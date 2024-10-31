@@ -41,6 +41,14 @@ public class ComicService {
 		}
 	}
 	
+	public List<Comic> findByTitle(String search) {
+		return comicRepo.findComicByTitleContaining(search);
+	}
+	
+	public List<Comic> findByGenres(String[] genres) {
+		return comicRepo.findComicByGenres(genres);
+	}
+	
 	// updates a comic
 	public Comic updateComic(Comic comic) {
 		return comicRepo.save(comic);

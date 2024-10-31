@@ -48,7 +48,7 @@
 					<form:label path="genres"><c:out value="${genre.name}"></c:out></form:label>
 					<form:checkbox path="genres" value="${genre}"/>
 				</c:forEach>
-
+			</p>
             <div>
                 <form:label path="coverImage">Comic Book Cover</form:label>
                 <input type="file" required id="coverPicture" name="coverPicture"/>
